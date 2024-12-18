@@ -1,7 +1,6 @@
 """
 Parsing Trip Data Input from Terminal (for now)
 """
-from typing import 
 
 def read_trucker_info():
     """
