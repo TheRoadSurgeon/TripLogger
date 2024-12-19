@@ -7,7 +7,7 @@ A class file that creates driver details
 
 # Class that keeps driver information nice an neat.
 class Driver:
-    def __init__(self, driverID: int, driverFirstName: str, driverLastName: str, driverHome: str):
+    def __init__(self, driverID: int, driverFirstName: str, driverLastName: str, driverHome: int = None):
         self._DriverID = driverID
         self._DriverFirstName = driverFirstName
         self._DriverLastName = driverLastName

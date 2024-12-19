@@ -5,7 +5,7 @@ A class file that creates truck details
 """
 # Truck class to keep truck information nice and neat.
 class Truck:
-    def __init__(self, truckID: int, truckMiles: int, truckHome: int, truckMake: str, truckModel: str, icIspName: str, icIspNumber):
+    def __init__(self, truckID: int, truckMiles: int, truckHome: str = None, truckMake: str = None, truckModel: str = None, icIspName: str = None, icIspNumber: str = None):
         self._TruckID = truckID 
         self._TruckMiles = truckMiles
         self._TruckHome = truckHome
