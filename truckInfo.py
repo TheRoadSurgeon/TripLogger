@@ -5,12 +5,14 @@ A class file that creates truck details
 """
 # Truck class to keep truck information nice and neat.
 class Truck:
-    def __init__(self, truckID: int, truckMiles: int, truckHome: int, truckMake: str, truckModel: str):
+    def __init__(self, truckID: int, truckMiles: int, truckHome: int, truckMake: str, truckModel: str, icIspName: str, icIspNumber):
         self._TruckID = truckID 
         self._TruckMiles = truckMiles
         self._TruckHome = truckHome
         self._TruckMake = truckMake
         self._TruckModel = truckModel
+        self._IcIspName = icIspName
+        self._IcIspNumber = icIspNumber
 
     # Truck ID generally assigned by the company.
     @property
@@ -40,3 +42,14 @@ class Truck:
     @property
     def TruckModel(self):
         return self._TruckModel
+    
+    # Company name the truck is associated with
+    @property
+    def IcIspName(self):
+        return self._IcIspName
+    
+    # Company number the truck is associated with
+    # Ex: C731...
+    @property
+    def IcIspNumber(self):
+        return self._IcIspNumber
