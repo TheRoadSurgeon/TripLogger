@@ -1,13 +1,13 @@
 """
-Date: 12/18/20224
-@ Hristian Tountchev
+Date: 12/18/2024
+@author Hristian Tountchev
 A class file that creates driver details
 """
 
 
 # Class that keeps driver information nice an neat.
 class Driver:
-    def __init__(self, driverID: int, driverFirstName: str, driverLastName: str, driverHome: str):
+    def __init__(self, driverID: int, driverFirstName: str, driverLastName: str, driverHome: int = None):
         self._DriverID = driverID
         self._DriverFirstName = driverFirstName
         self._DriverLastName = driverLastName
@@ -34,3 +34,19 @@ class Driver:
     @property
     def DriverHome(self):
         return self._DriverHome 
+    
+    # The str helps with printing and logging.
+    def __str__(self):
+        return (
+            f"Driver(ID: {self.DriverID}, Name: {self.DriverFirstName} {self.DriverLastName}, "
+            f"Home Base: {self.DriverHome})"
+        )
+    
+    # With eq with can do object comparisons.
+    def __eq__(self, other):
+        """Equality comparison for Driver objects."""
+        if not isinstance(other, Driver):
+            return False
+        return self.DriverID == other.DriverID
+    
+
