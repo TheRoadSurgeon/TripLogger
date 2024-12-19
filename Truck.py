@@ -1,6 +1,6 @@
 """
-Date: 12/18/20224
-@ Hristian Tountchev
+Date: 12/18/2024
+@author Hristian Tountchev
 A class file that creates truck details
 """
 # Truck class to keep truck information nice and neat.
@@ -53,3 +53,19 @@ class Truck:
     @property
     def IcIspNumber(self):
         return self._IcIspNumber
+    
+    # The str helps with printing and logging.
+    def __str__(self):
+        
+        return (
+            f"Truck(ID: {self.TruckID}, Miles: {self.TruckMiles}, Home Base: {self.TruckHome}, "
+            f"Make: {self.TruckMake}, Model: {self.TruckModel}, "
+            f"Company: {self.IcIspName}, Company Number: {self.IcIspNumber})"
+        )
+    
+    # With eq with can do object comparisons.
+    def __eq__(self, other):
+        """Equality comparison for Truck objects."""
+        if not isinstance(other, Truck):
+            return False
+        return self.TruckID == other.TruckID
