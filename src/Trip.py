@@ -12,6 +12,11 @@ from datetime import datetime
 
 class Trip:
     def __init__(self, tripID: int, truckID: int, driverID: int, date: str, locationCodes: dict, milesTraveled: dict, roads: list):
+        
+        # Enforce the keys in the dictionary to be integers
+        self.locationCodes = {int(k): v for k, v in locationCodes.items()}
+        self.milesTraveled = {int(k): v for k, v in milesTraveled.items()}
+
         self._TripID = tripID
         self._TruckID = truckID
         self._DriverID = driverID
@@ -56,8 +61,8 @@ class Trip:
     
     def __str__(self):
         return (
-            f"Trip ID: {self.TripID}, Truck ID: {self.TruckID}, Driver ID: {self.DriverID}, 
-            Date: {self.Date}, Location Codes: {self.LocationCode}, 
+            f"Trip ID: {self.TripID}, Truck ID: {self.TruckID}, Driver ID: {self.DriverID}, \
+            Date: {self.Date}, Location Codes: {self.LocationCode}, \
             Miles Traveled: {self.MilesTraveled}, Roads: {self.Roads}"
         )
     
