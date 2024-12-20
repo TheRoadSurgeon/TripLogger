@@ -105,13 +105,13 @@
 -- VALUES (1001, 'John', 'Doe', '604'),
 --        (1002, 'Jane', 'Smith', '436');
 
--- INSERT INTO Trips (TruckID, DriverID, Date, LocationCodes, MilesTraveled, Roads)
+-- INSERT INTO Trips (truck_id, driver_id, start_time, location_codes, miles_traveled, roads)
 -- VALUES (
 --     1, -- Must match an existing TruckID in the Trucks table
---     1002, -- Must match an existing DriverID in the Drivers table
---     '12-19-2024 2:30',
+--     1, -- Must match an existing DriverID in the Drivers table
+--     '2024-12-19',
 --     '{"604": "Bedford Park IL", "436": "Toledo OH"}',
---     '{"604": 30, "436": 150}',
+--     '{"IL": 30, "IN": 150, "OH": 64}",',
 --     '["I-90", "US-294", "I-80"]'
 -- );
 
