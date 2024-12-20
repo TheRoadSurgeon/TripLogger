@@ -3,12 +3,11 @@
     {
       "previewLimit": 50,
       "driver": "SQLite",
-      "database": "${workspaceFolder:TripLogger}/LogisticsDB.db",
-      "name": "LogisticsDB"
+      "name": "fleet_management_db",
+      "database": "${workspaceFolder:TripLogger}/src/fleet_management_db.db"
     }
-    
   ],
-  
+
   "terminal.integrated.env.windows": {
     "PYTHONPATH": "${workspaceFolder:TripLogger}/src"
   },
@@ -18,5 +17,4 @@
   "terminal.integrated.env.osx": {
     "PYTHONPATH": "${workspaceFolder:TripLogger}/src"
   }
-  
 }
