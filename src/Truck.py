@@ -5,7 +5,7 @@ A class file that creates truck details
 """
 # Truck class to keep truck information nice and neat.
 class Truck:
-    def __init__(self, truckID: int, truckMiles: int, truckHome: str = None, truckMake: str = None, truckModel: str = None, icIspName: str = None, icIspNumber: str = None):
+    def __init__(self, truckID: int, truckMiles: int, truckHome: str = None, truckMake: str = None, truckModel: str = None, icIspName: str = None, icIspNumber: str = None, truckYear: int = None):
         self._TruckID = truckID 
         self._TruckMiles = truckMiles
         self._TruckHome = truckHome
@@ -13,6 +13,7 @@ class Truck:
         self._TruckModel = truckModel
         self._IcIspName = icIspName
         self._IcIspNumber = icIspNumber
+        self._TruckYear = truckYear
 
     # Truck ID generally assigned by the company.
     @property
@@ -42,17 +43,21 @@ class Truck:
     @property
     def TruckModel(self):
         return self._TruckModel
-    
+
     # Company name the truck is associated with
     @property
     def IcIspName(self):
         return self._IcIspName
     
     # Company number the truck is associated with
-    # Ex: C731...
+    # The "Number" has to be a string because it has preceding char Ex: C731...
     @property
     def IcIspNumber(self):
         return self._IcIspNumber
+    
+    @property
+    def TruckYear(self):
+        return self._TruckYear
     
     # The str helps with printing and logging.
     def __str__(self):
