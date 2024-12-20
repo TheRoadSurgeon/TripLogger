@@ -1,36 +1,107 @@
--- CREATE TABLE Drivers (
---     DriverID INTEGER PRIMARY KEY NOT NULL,      -- Manually entered unique ID
---     DriverFirstName TEXT NOT NULL,              -- Driver's first name
---     DriverLastName TEXT NOT NULL,               -- Driver's last name
---     DriverHome TEXT                             -- Driver's home location
+-- CREATE TABLE IF NOT EXISTS drivers(
+--     driver_id INTEGER PRIMARY KEY AUTOINCREMENT,
+--     external_driver_id TEXT,                              -- IE if outside company issue id like FedEx
+--     first_name TEXT NOT NULL,
+--     last_name TEXT NOT NULL,
+--     middle_name TEXT,
+--     driver_homebase TEXT,
+--     date_of_birth TEXT,                                   -- Store as "YYYY-MM-DD"
+--     phone_number TEXT,
+--     email TEXT,             
+--     photo_url TEXT,
+    
+--     driver_license_number TEXT,
+--     driver_license_state TEXT,        -- e.g. "CA"
+--     driver_license_expiration_date TEXT,  -- "YYYY-MM-DD"
+--     endorsements TEXT,
+    
+--     medical_certificate_expiration_date TEXT, -- "YYYY-MM-DD"
+    
+--     emergency_contact_name TEXT,
+--     emergency_contact_phone TEXT,
+    
+--     created_at TEXT DEFAULT (datetime('now')),
+--     updated_at TEXT DEFAULT (datetime('now'))
 -- );
 
--- CREATE TABLE Trucks (
---     TruckID INTEGER PRIMARY KEY NOT NULL,     -- Unique ID for the truck, must be entered manually and cannot be NULL
---     TruckMiles INTEGER DEFAULT 0,             -- Total miles driven by the truck
---     TruckHome TEXT,                           -- Home location of the truck
---     TruckMake TEXT,                           -- Manufacturer of the truck
---     TruckModel TEXT,                          -- Model of the truck
---     IcIspName TEXT,                           -- Name of the Independent Contractor or ISP
---     IcIspNumber TEXT                          -- Contact number of the Independent Contractor or ISP
+
+-- CREATE TABLE IF NOT EXISTS trucks (
+--     truck_id INTEGER PRIMARY KEY AUTOINCREMENT,
+--     external_truck_id TEXT,
+--     vin TEXT UNIQUE,                -- Vehicle Identification Number
+--     license_plate_number TEXT,
+--     truck_make TEXT,
+--     truck_model TEXT,
+--     truck_year INTEGER,             -- e.g., 2020
+--     truck_type TEXT,                -- e.g., "tractor", "flatbed"
+--     IC_ISP_name TEXT,
+--     IC_ISP_number TEXT,
+--     color TEXT,
+    
+--     ownership_status TEXT,          -- e.g., "owned", "leased", "rented"
+--     registered_state TEXT,          -- e.g., "CA"
+--     registration_expiration_date TEXT, -- "YYYY-MM-DD"
+    
+--     insurance_policy_number TEXT,
+--     insurance_expiration_date TEXT, -- "YYYY-MM-DD"
+--     ifta_account_number TEXT,
+    
+--     odometer_reading REAL,
+--     odometer_last_updated_date TEXT, -- "YYYY-MM-DD HH:MM:SS"
+    
+--     fuel_type TEXT,                -- e.g., "diesel"
+--     fuel_efficiency_rating REAL,
+--     gvwr TEXT,                     -- Gross Vehicle Weight Rating (store as TEXT or an INTEGER if numeric)
+--     cargo_capacity TEXT,
+    
+--     assigned_driver_id INTEGER,    -- FK to drivers_info(driver_id)
+    
+--     purchase_date TEXT,            -- "YYYY-MM-DD"
+--     warranty_expiration_date TEXT, -- "YYYY-MM-DD"
+--     last_service_date TEXT,        -- "YYYY-MM-DD"
+--     maintenance_notes TEXT,
+--     status TEXT,                   -- e.g., "active", "in maintenance"
+--     gps_tracker_id TEXT,
+    
+--     created_at TEXT DEFAULT (datetime('now')),
+--     updated_at TEXT DEFAULT (datetime('now'))
 -- );
 
--- CREATE TABLE Trips (
---     TripID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, -- Auto-incremented unique trip identifier
---     TruckID INTEGER NOT NULL,                          -- Foreign key referencing Trucks table
---     DriverID INTEGER NOT NULL,                         -- Foreign key referencing Drivers table
---     Date TEXT NOT NULL,                                -- Date and time of the trip (MM-DD-YYYY H:M format)
---     LocationCodes TEXT NOT NULL,                       -- JSON string storing location codes (e.g., {"604": "Bedford Park IL", "436": "Toledo OH"})
---     MilesTraveled TEXT NOT NULL,                       -- JSON string storing miles traveled (e.g., {"604": 30, "436": 150})
---     Roads TEXT NOT NULL,                               -- JSON string storing major roads traveled (e.g., ["I-90", "US-41"]),
---     FOREIGN KEY (TruckID) REFERENCES Trucks (TruckID), -- Establish TruckID as a foreign key
---     FOREIGN KEY (DriverID) REFERENCES Drivers (DriverID) -- Establish DriverID as a foreign key
+-- CREATE TABLE IF NOT EXISTS trips (
+--     trip_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+--     truck_id INTEGER NOT NULL,                          
+--     driver_id INTEGER NOT NULL,
+    
+--     start_time TEXT,               -- e.g., "YYYY-MM-DD HH:MM:SS"
+--     end_time TEXT,                 -- e.g., "YYYY-MM-DD HH:MM:SS"
+--     start_location TEXT,           -- e.g., "Bedford Park IL"
+--     end_location TEXT,             -- e.g., "Toledo OH"
+    
+--     location_codes TEXT NOT NULL,       -- JSON for all location codes
+--     miles_traveled INTEGER NOT NULL,    -- Total miles traveled
+--     roads TEXT NOT NULL,                -- JSON for major roads traveled
+    
+--     rate REAL,                     -- Per-mile or flat rate for the trip
+--     total_payment REAL,            -- Computed: rate * total miles (if applicable)
+--     load_description TEXT,         -- Description of cargo/load
+--     cargo_weight REAL,             -- Weight of the cargo
+--     fuel_used REAL,                -- Fuel consumed (gallons/liters)
+    
+--     ic_isp_name TEXT,              -- Independent Contractor/Service Provider name if varies by trip
+--     ic_isp_number TEXT,            -- IC/ISP identification number if needed
+    
+--     created_at TEXT DEFAULT (datetime('now')),
+--     updated_at TEXT DEFAULT (datetime('now')),
+    
+--     FOREIGN KEY (truck_id) REFERENCES trucks (truck_id),
+--     FOREIGN KEY (driver_id) REFERENCES drivers (driver_id)
 -- );
 
--- INSERT INTO Trucks (TruckID, TruckMiles, TruckHome, TruckMake, TruckModel, IcIspName, IcIspNumber)
--- VALUES (1, 120000, '604', 'Volvo', 'VLN860', 'Company', 'C12345');
 
--- INSERT INTO Drivers (DriverID, DriverFirstName, DriverLastName, DriverHome)
+-- INSERT INTO trucks (external_truck_id, odometer_reading, truck_make, truck_model, ic_isp_name, ic_isp_number)
+-- VALUES (1, 120000, 'Volvo', 'VLN860', 'Company', 'C12345');
+
+-- INSERT INTO drivers (external_driver_id, first_name, last_name, driver_homebase)
 -- VALUES (1001, 'John', 'Doe', '604'),
 --        (1002, 'Jane', 'Smith', '436');
 
