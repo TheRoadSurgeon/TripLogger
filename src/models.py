@@ -1,7 +1,7 @@
 from .config import db
 
 class Driver(db.Model):
-    __tablename__ = 'Driver'
+    __tablename__ = 'drivers'
     DriverID = db.Column(db.Integer, primary_key=True)
     FirstName = db.Column(db.String(50), nullable=False)
     LastName = db.Column(db.String(50), nullable=False)

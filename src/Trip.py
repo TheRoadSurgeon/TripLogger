@@ -7,71 +7,38 @@ On a trip we need to keep track of:
             driver(Name/ID); truck(ID); date(trip should last one day); 
             location(list of number code Ex: 604); miles traveled(list); major roads used(list).
 """
+from dataclasses import dataclass, field
+from typing import Optional, Dict, List
 
-from datetime import datetime
-
+@dataclass
 class Trip:
-    def __init__(self, tripID: int, truckID: int, driverID: int, date: str, locationCodes: dict, milesTraveled: dict, roads: list):
-        
-        # Enforce the keys in the dictionary to be integers
-        self.locationCodes = {int(k): v for k, v in locationCodes.items()}
-        self.milesTraveled = {int(k): v for k, v in milesTraveled.items()}
+    trip_id: Optional[int] = None  # Primary key, auto-incremented
+    truck_id: int = 0  # Foreign key to Truck table
+    driver_id: int = 0  # Foreign key to Driver table
+    
+    start_date: Optional[str] = None  # e.g., "YYYY-MM-DD"
+    end_date: Optional[str] = None  # e.g., "YYYY-MM-DD"
+    start_location: Optional[str] = None
+    end_location: Optional[str] = None
 
-        self._TripID = tripID
-        self._TruckID = truckID
-        self._DriverID = driverID
-        try:
-            datetime.strptime(date, "%m/%d/%Y %H:%M")
-        except ValueError:
-            raise ValueError(f"Invalid date format: {date}, should be MM/DD/YYYY HH:MM")
-        self._Date = date
-        # Location codes is a dictionary of all the codes that the drivers was in with the respective location 
-        # Ex: key: 604 value: Bedford Park IL, key: 436 value: Toledo OH
-        self._LocationCodes = locationCodes 
-        self._MilesTraveled = milesTraveled # MilesTraveled is a dictionary Ex: key: 604 value: 30 (miles)
-        self._Roads = roads
+    location_codes: Dict[int, str] = field(default_factory=dict)  # e.g., {604: "Bedford Park IL"}
+    miles_traveled: int = 0  # Total miles traveled
+    roads: List[str] = field(default_factory=list)  # Major roads traveled
 
-    @property
-    def TripID(self):
-        return self._TripID
-    
-    @property
-    def TruckID(self):
-        return self._TruckID
+    rate: Optional[float] = None  # Per-mile or flat rate (not in use yet)
+    total_payment: Optional[float] = None  # Computed total payment (not in use yet)
+    load_description: Optional[str] = None  # Description of cargo/load
+    cargo_weight: Optional[float] = None  # Weight of the cargo
+    fuel_used: Optional[float] = None  # Fuel consumed (gallons/liters)
 
-    @property
-    def DriverID(self):
-        return self._DriverID
-    
-    @property
-    def Date(self):
-        return self._Date
-    
-    @property 
-    def LocationCodes(self):
-        return self._LocationCodes
-    
-    @property
-    def MilesTraveled(self):
-        return self._MilesTraveled
-    
-    @property
-    def Roads(self):
-        return self._Roads
-    
+    ic_isp_name: Optional[str] = None  # Independent Contractor/Service Provider name
+    ic_isp_number: Optional[str] = None  # IC/ISP identification number
+
+
     def __str__(self):
+        """Custom string representation."""
         return (
-            f"Trip ID: {self.TripID}, Truck ID: {self.TruckID}, Driver ID: {self.DriverID}, \
-            Date: {self.Date}, Location Codes: {self.LocationCode}, \
-            Miles Traveled: {self.MilesTraveled}, Roads: {self.Roads}"
+            f"Trip(ID: {self.trip_id}, Truck: {self.truck_id}, Driver: {self.driver_id}, "
+            f"Start: {self.start_date} ({self.start_location}), End: {self.end_date} ({self.end_location}), "
+            f"Miles: {self.miles_traveled}, Roads: {self.roads})"
         )
-    
-    def __repr__(self):
-        return (
-            f"Trip(TripID={self.TripID}, TruckID={self.TruckID}, DriverID={self.DriverID}, Date={self.Date})"
-        )
-        
-    def __eq__(self, value):
-        if not isinstance(value, Trip):
-            return False
-        return self.TripID == value.TripID

@@ -3,74 +3,53 @@ Date: 12/18/2024
 @author Hristian Tountchev
 A class file that creates truck details
 """
+from dataclasses import dataclass, field
+from typing import Optional
 # Truck class to keep truck information nice and neat.
+@dataclass
 class Truck:
-    def __init__(self, truckID: int, truckMiles: int, truckHome: str = None, truckMake: str = None, truckModel: str = None, icIspName: str = None, icIspNumber: str = None, truckYear: int = None):
-        self._TruckID = truckID 
-        self._TruckMiles = truckMiles
-        self._TruckHome = truckHome
-        self._TruckMake = truckMake
-        self._TruckModel = truckModel
-        self._IcIspName = icIspName
-        self._IcIspNumber = icIspNumber
-        self._TruckYear = truckYear
+    truck_id: Optional[int] = None  # Primary key, auto-incremented
+    external_truck_id: Optional[str] = None  # External ID from another company/system
+    vin: str = ""  # Vehicle Identification Number, unique
+    license_plate_number: Optional[str] = None
+    truck_make: Optional[str] = None
+    truck_model: Optional[str] = None
+    truck_year: Optional[int] = None  # e.g., 2020
+    truck_type: Optional[str] = None  # e.g., "tractor", "flatbed"
+    ic_isp_name: Optional[str] = None  # Independent Contractor/ISP name
+    ic_isp_number: Optional[str] = None  # IC/ISP identification number
+    color: Optional[str] = None
+    
+    ownership_status: Optional[str] = None  # e.g., "owned", "leased", "rented"
+    registered_state: Optional[str] = None  # e.g., "CA"
+    registration_expiration_date: Optional[str] = None  # Stored as "YYYY-MM-DD"
+    
+    insurance_policy_number: Optional[str] = None
+    insurance_expiration_date: Optional[str] = None  # Stored as "YYYY-MM-DD"
+    ifta_account_number: Optional[str] = None  # Fuel tax account number
+    
+    odometer_reading: Optional[float] = None
+    odometer_last_updated_date: Optional[str] = None  # Stored as "YYYY-MM-DD"
+    
+    fuel_type: Optional[str] = None  # e.g., "diesel"
+    fuel_efficiency_rating: Optional[float] = None  # Fuel efficiency rating
+    gvwr: Optional[str] = None  # Gross Vehicle Weight Rating
+    cargo_capacity: Optional[str] = None  # Cargo capacity
+    
+    assigned_driver_id: Optional[int] = None  # Which driver the truck is assign to
+    
+    purchase_date: Optional[str] = None  # Stored as "YYYY-MM-DD"
+    warranty_expiration_date: Optional[str] = None  # Stored as "YYYY-MM-DD"
+    last_service_date: Optional[str] = None  # Stored as "YYYY-MM-DD"
+    maintenance_notes: Optional[str] = None
+    status: Optional[str] = None  # e.g., "active", "in maintenance"
+    gps_tracker_id: Optional[str] = None
 
-    # Truck ID generally assigned by the company.
-    @property
-    def TruckID(self):
-        return self._TruckID
-    
-    # Trucker's current odometer mileage.
-    @property
-    def TruckMiles(self):
-        return self._TruckMiles
-    
-    # Truck home is a digit that is the indicator for which home base 
-    # the truck starts their day in. 
-    # Ex: 604 is Bedford Park, IL
-    @property
-    def TruckHome(self):
-        return self._TruckHome
-    
-    # Make is the company of the truck.
-    # Ex: Volov
-    @property
-    def TruckMake(self):
-        return self._TruckMake
-    
-    # Model is the type of truck.
-    # Ex: VNL 860
-    @property
-    def TruckModel(self):
-        return self._TruckModel
-
-    # Company name the truck is associated with
-    @property
-    def IcIspName(self):
-        return self._IcIspName
-    
-    # Company number the truck is associated with
-    # The "Number" has to be a string because it has preceding char Ex: C731...
-    @property
-    def IcIspNumber(self):
-        return self._IcIspNumber
-    
-    @property
-    def TruckYear(self):
-        return self._TruckYear
-    
-    # The str helps with printing and logging.
     def __str__(self):
-        
+        """Custom string representation."""
         return (
-            f"Truck(ID: {self.TruckID}, Miles: {self.TruckMiles}, Home Base: {self.TruckHome}, "
-            f"Make: {self.TruckMake}, Model: {self.TruckModel}, "
-            f"Company: {self.IcIspName}, Company Number: {self.IcIspNumber})"
+            f"Truck(ID: {self.truck_id}, VIN: {self.vin}, Plate: {self.license_plate_number}, "
+            f"Make: {self.truck_make}, Model: {self.truck_model}, Year: {self.truck_year}, "
+            f"Type: {self.truck_type}, Status: {self.status}, Assigned Driver ID: {self.assigned_driver_id})"
         )
     
-    # With eq with can do object comparisons.
-    def __eq__(self, other):
-        """Equality comparison for Truck objects."""
-        if not isinstance(other, Truck):
-            return False
-        return self.TruckID == other.TruckID
